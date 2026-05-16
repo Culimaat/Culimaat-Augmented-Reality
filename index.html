@@ -514,6 +514,19 @@
   });
 
   function startAR() {
+    // Explicitly request camera permission first (required for iOS Safari)
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+      .then((stream) => {
+        // Stop the test stream — MindAR will open its own
+        stream.getTracks().forEach(t => t.stop());
+        launchAR();
+      })
+      .catch((err) => {
+        alert('Camera access is required for AR.\n\nPlease allow camera access in your browser settings and try again.');
+      });
+  }
+
+  function launchAR() {
     const landing = document.getElementById('landing');
     landing.classList.add('fade-out');
     setTimeout(() => {
@@ -528,8 +541,6 @@
       });
 
       sceneEl.addEventListener('targetFound', () => {
-        document.getElementById('ar-dot').classList.add('on');
-        document.getElementById('ar-status-text').textContent = 'Detected';
         document.getElementById('ar-hint').textContent = 'Move around to explore';
         const toast = document.getElementById('toast');
         toast.classList.add('show');
@@ -537,8 +548,6 @@
       });
 
       sceneEl.addEventListener('targetLost', () => {
-        document.getElementById('ar-dot').classList.remove('on');
-        document.getElementById('ar-status-text').textContent = 'Searching…';
         document.getElementById('ar-hint').textContent = 'Point camera at the floor plan';
       });
     }, 800);
