@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>Culimaat — AR Viewer</title>
+  <title>Culimaat</title>
 
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -130,18 +130,21 @@
       width: 100%; height: 100%;
       z-index: 0;
       display: none;
-      background: var(--bg) !important;
+      background: transparent !important;
     }
 
-    /* Remove blue background and hide AFrame UI elements */
-    a-scene canvas { background: transparent !important; }
+    /* Kill ALL blue backgrounds from AFrame/MindAR */
+    a-scene canvas,
+    .a-canvas,
+    .mindar-ui-overlay,
+    #ar-scene { background: transparent !important; }
+
+    /* Hide AFrame default UI */
     .a-enter-vr-button,
     .a-orientation-modal,
     #webar-mind-ar-scene,
-    [data-aframe-inspector-original-camera] { display: none !important; }
-
-    /* Hide browser title bar shown by MindAR */
-    a-scene::before { display: none !important; }
+    [data-aframe-inspector-original-camera],
+    .a-loader-title { display: none !important; }
 
     /* ── LANDING ── */
     #landing {
@@ -457,10 +460,10 @@
   id="ar-scene"
   mindar-image="imageTargetSrc: targets.mind; autoStart: false; uiLoading: no; uiError: no; uiScanning: no;"
   color-space="sRGB"
-  renderer="colorManagement: true; physicallyCorrectLights: true; alpha: true"
-  embedded
+  renderer="colorManagement: true; physicallyCorrectLights: true; alpha: true; antialias: true"
   vr-mode-ui="enabled: false"
   device-orientation-permission-ui="enabled: false"
+  loading-screen="enabled: false"
 >
   <a-assets>
     <a-asset-item id="kitchen-model" src="Untitled_2.glb"></a-asset-item>
