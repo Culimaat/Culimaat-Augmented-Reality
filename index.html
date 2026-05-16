@@ -130,7 +130,18 @@
       width: 100%; height: 100%;
       z-index: 0;
       display: none;
+      background: var(--bg) !important;
     }
+
+    /* Remove blue background and hide AFrame UI elements */
+    a-scene canvas { background: transparent !important; }
+    .a-enter-vr-button,
+    .a-orientation-modal,
+    #webar-mind-ar-scene,
+    [data-aframe-inspector-original-camera] { display: none !important; }
+
+    /* Hide browser title bar shown by MindAR */
+    a-scene::before { display: none !important; }
 
     /* ── LANDING ── */
     #landing {
@@ -323,7 +334,7 @@
       pointer-events: all;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       padding: 1.4rem 1.8rem;
       background: linear-gradient(to bottom, rgba(179,167,157,0.92) 0%, transparent 100%);
     }
@@ -446,7 +457,8 @@
   id="ar-scene"
   mindar-image="imageTargetSrc: targets.mind; autoStart: false; uiLoading: no; uiError: no; uiScanning: no;"
   color-space="sRGB"
-  renderer="colorManagement: true; physicallyCorrectLights: true"
+  renderer="colorManagement: true; physicallyCorrectLights: true; alpha: true"
+  embedded
   vr-mode-ui="enabled: false"
   device-orientation-permission-ui="enabled: false"
 >
@@ -471,10 +483,6 @@
 <div id="ar-ui">
   <div class="ar-header">
     <img src="culimaat-logo.png" alt="Culimaat"/>
-    <div class="ar-status">
-      <div class="dot" id="ar-dot"></div>
-      <span id="ar-status-text">Searching…</span>
-    </div>
   </div>
   <div class="ar-bottom">
     <div class="ar-hint-text" id="ar-hint">Point camera at the floor plan</div>
