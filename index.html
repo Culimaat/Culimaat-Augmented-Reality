@@ -531,17 +531,30 @@
 
   function launchAR() {
     const landing = document.getElementById('landing');
+    const scene   = document.getElementById('ar-scene');
+    const arUI    = document.getElementById('ar-ui');
+
     landing.classList.add('fade-out');
+
+    // Show scene FIRST before MindAR starts
+    scene.style.display = 'block';
+    arUI.classList.add('active');
+
     setTimeout(() => {
       landing.style.display = 'none';
-      document.getElementById('ar-scene').style.display = 'block';
-      document.getElementById('ar-ui').classList.add('active');
 
       const sceneEl = document.querySelector('a-scene');
-      sceneEl.addEventListener('loaded', () => {
+
+      const startMindAR = () => {
         arSystem = sceneEl.systems['mindar-image-system'];
         if (arSystem) arSystem.start();
-      });
+      };
+
+      if (sceneEl.hasLoaded) {
+        startMindAR();
+      } else {
+        sceneEl.addEventListener('loaded', startMindAR, { once: true });
+      }
 
       sceneEl.addEventListener('targetFound', () => {
         document.getElementById('ar-hint').textContent = 'Move around to explore';
@@ -553,7 +566,7 @@
       sceneEl.addEventListener('targetLost', () => {
         document.getElementById('ar-hint').textContent = 'Point camera at the floor plan';
       });
-    }, 800);
+    }, 400);
   }
 
   function stopAR() {
