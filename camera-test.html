@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Camera Test</title>
+  <style>
+    body { margin: 0; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+    video { width: 100%; max-width: 400px; }
+    button { margin-top: 20px; padding: 16px 32px; font-size: 18px; background: white; border: none; border-radius: 8px; cursor: pointer; }
+    #status { color: white; margin-top: 16px; font-family: sans-serif; font-size: 14px; text-align: center; padding: 0 20px; }
+  </style>
+</head>
+<body>
+  <video id="video" autoplay playsinline></video>
+  <button onclick="startCamera()">Open Camera</button>
+  <div id="status">Tap the button to test your camera</div>
+
+  <script>
+    function startCamera() {
+      document.getElementById('status').textContent = 'Requesting camera…';
+      navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+        audio: false
+      })
+      .then(stream => {
+        document.getElementById('video').srcObject = stream;
+        document.getElementById('status').textContent = '✅ Camera works!';
+      })
+      .catch(err => {
+        document.getElementById('status').textContent = '❌ Error: ' + err.message + ' — Go to Settings → Safari → Camera → Allow';
+      });
+    }
+  </script>
+</body>
+</html>
