@@ -30,7 +30,6 @@
       font-weight: 300;
     }
 
-    /* GRAIN - only on landing, not during AR */
     .grain {
       position: fixed; inset: -50%; width: 200%; height: 200%;
       z-index: 20; pointer-events: none; opacity: 0.13;
@@ -39,7 +38,6 @@
       animation: grain 0.6s steps(1) infinite;
     }
     .grain.hidden { display: none; }
-
     @keyframes grain {
       0%{transform:translate(0,0)} 10%{transform:translate(-3%,-4%)} 20%{transform:translate(4%,2%)}
       30%{transform:translate(-2%,5%)} 40%{transform:translate(5%,-2%)} 50%{transform:translate(-4%,1%)}
@@ -86,18 +84,18 @@
     .hero {
       flex: 1; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 1rem 2.2rem; text-align: center; gap: 1.6rem;
+      padding: 1rem 2.2rem; text-align: center; gap: 1.4rem;
     }
     .hero-eyebrow { font-size: 0.5rem; letter-spacing: 0.36em; text-transform: uppercase; color: var(--muted); }
     .hero-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 10vw, 4.2rem);
+      font-size: clamp(2.4rem, 9vw, 3.8rem);
       font-weight: 300; line-height: 1.1; color: var(--text);
     }
     .hero-title em { font-style: italic; color: rgba(43,47,33,0.42); }
 
     .scan-bracket {
-      position: relative; width: 130px; height: 130px;
+      position: relative; width: 120px; height: 120px;
       display: flex; align-items: center; justify-content: center;
     }
     .corner { position: absolute; width: 20px; height: 20px; border-color: rgba(43,47,33,0.28); border-style: solid; }
@@ -113,10 +111,19 @@
     @keyframes scanline { 0%{top:2px;opacity:0} 8%{opacity:0.8} 92%{opacity:0.8} 100%{top:calc(100% - 2px);opacity:0} }
     .scan-label { font-size: 0.48rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
 
-    .brand-quote {
-      max-width: 280px; font-family: 'Cormorant Garamond', serif;
-      font-size: 0.92rem; font-style: italic;
-      color: rgba(43,47,33,0.48); line-height: 1.85;
+    /* Kitchen list */
+    .kitchen-list {
+      display: flex; flex-direction: column; gap: 0.4rem;
+      width: 100%; max-width: 260px;
+    }
+    .kitchen-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.65rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .kitchen-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem; color: var(--gold); min-width: 16px;
     }
 
     .cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
@@ -133,8 +140,7 @@
       position: fixed !important;
       top: 0 !important; left: 0 !important;
       width: 100% !important; height: 100% !important;
-      z-index: 5 !important;
-      display: none;
+      z-index: 5 !important; display: none;
     }
 
     /* AR UI */
@@ -159,13 +165,20 @@
       padding: 1rem 1.8rem 2.4rem;
       background: linear-gradient(to top, rgba(43,47,33,0.5), transparent);
     }
-    .ar-hint { font-size: 0.54rem; letter-spacing: 0.18em; text-transform: uppercase; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+
+    .ar-kitchen-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-style: italic; color: white;
+      letter-spacing: 0.06em; text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      min-height: 1.4rem;
+    }
+
+    .ar-hint { font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.7); text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
     .ar-controls { display: flex; gap: 0.5rem; }
     .ar-btn {
       background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
       color: white; padding: 0.6rem 1.1rem; font-family: 'Jost', sans-serif;
       font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
     }
 
     #toast {
@@ -197,18 +210,25 @@
   <div class="hero">
     <div class="hero-eyebrow">Augmented Reality</div>
     <div class="hero-title">Your kitchen,<br><em>your space</em></div>
+
     <div class="scan-bracket">
       <div class="corner tl"></div><div class="corner tr"></div>
       <div class="corner bl"></div><div class="corner br"></div>
       <div class="scan-line"></div>
       <div class="scan-label">Scan</div>
     </div>
-    <div class="brand-quote">
-      In everything we do, we want to be better. Driven by innovation, we never give in to comfort zones. Beyond dreams and imagination.
+
+    <div class="kitchen-list">
+      <div class="kitchen-item"><span class="kitchen-num">1</span> Culimaat Patina</div>
+      <div class="kitchen-item"><span class="kitchen-num">2</span> Culimaat Vetrae</div>
+      <div class="kitchen-item"><span class="kitchen-num">3</span> Culimaat Duim</div>
+      <div class="kitchen-item"><span class="kitchen-num">4</span> Culimaat BM</div>
+      <div class="kitchen-item"><span class="kitchen-num">5</span> Culimaat Stricto</div>
     </div>
+
     <div class="cta-wrap">
       <button class="cta-btn" onclick="startAR()">Start</button>
-      <div class="cta-hint">Point camera at your floor plan</div>
+      <div class="cta-hint">Point camera at a floor plan</div>
     </div>
   </div>
 </div>
@@ -220,23 +240,61 @@
   renderer="colorManagement: true; physicallyCorrectLights: true;"
   vr-mode-ui="enabled: false"
   device-orientation-permission-ui="enabled: false"
+  loading-screen="enabled: false"
 >
   <a-assets>
-    <a-asset-item id="kitchen-model" src="keuken.glb"></a-asset-item>
+    <a-asset-item id="model-0" src="Culimaat_Patina.glb"></a-asset-item>
+    <a-asset-item id="model-1" src="Culimaat_Vetrae.glb"></a-asset-item>
+    <a-asset-item id="model-2" src="Culimaat_Duim.glb"></a-asset-item>
+    <a-asset-item id="model-3" src="Culimaat_BM.glb"></a-asset-item>
+    <a-asset-item id="model-4" src="Culimaat_Stricto.glb"></a-asset-item>
   </a-assets>
+
   <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+  <!-- Target 0: Patina -->
   <a-entity mindar-image-target="targetIndex: 0">
     <a-light type="ambient" intensity="0.9"></a-light>
     <a-light type="directional" intensity="1.2" position="1 2 1"></a-light>
-    <a-gltf-model id="kitchen" src="#kitchen-model" position="0 0 0" rotation="0 180 0" scale="0.125 0.125 0.125"></a-gltf-model>
+    <a-gltf-model class="kitchen-model" src="#model-0" position="0 0 0" rotation="0 180 0" scale="0.125 0.125 0.125"></a-gltf-model>
   </a-entity>
+
+  <!-- Target 1: Vetrae -->
+  <a-entity mindar-image-target="targetIndex: 1">
+    <a-light type="ambient" intensity="0.9"></a-light>
+    <a-light type="directional" intensity="1.2" position="1 2 1"></a-light>
+    <a-gltf-model class="kitchen-model" src="#model-1" position="0 0 0" rotation="0 180 0" scale="0.125 0.125 0.125"></a-gltf-model>
+  </a-entity>
+
+  <!-- Target 2: Duim -->
+  <a-entity mindar-image-target="targetIndex: 2">
+    <a-light type="ambient" intensity="0.9"></a-light>
+    <a-light type="directional" intensity="1.2" position="1 2 1"></a-light>
+    <a-gltf-model class="kitchen-model" src="#model-2" position="0 0 0" rotation="0 180 0" scale="0.125 0.125 0.125"></a-gltf-model>
+  </a-entity>
+
+  <!-- Target 3: BM -->
+  <a-entity mindar-image-target="targetIndex: 3">
+    <a-light type="ambient" intensity="0.9"></a-light>
+    <a-light type="directional" intensity="1.2" position="1 2 1"></a-light>
+    <a-gltf-model class="kitchen-model" src="#model-3" position="0 0 0" rotation="0 180 0" scale="0.125 0.125 0.125"></a-gltf-model>
+  </a-entity>
+
+  <!-- Target 4: Stricto -->
+  <a-entity mindar-image-target="targetIndex: 4">
+    <a-light type="ambient" intensity="0.9"></a-light>
+    <a-light type="directional" intensity="1.2" position="1 2 1"></a-light>
+    <a-gltf-model class="kitchen-model" src="#model-4" position="0 0 0" rotation="0 180 0" scale="0.125 0.125 0.125"></a-gltf-model>
+  </a-entity>
+
 </a-scene>
 
 <!-- AR UI -->
 <div id="ar-ui">
   <div class="ar-header"><img src="culimaat-logo.png" alt="Culimaat"/></div>
   <div class="ar-bottom">
-    <div class="ar-hint" id="ar-hint">Point camera at the floor plan · Swipe to rotate</div>
+    <div class="ar-kitchen-name" id="ar-kitchen-name"></div>
+    <div class="ar-hint" id="ar-hint">Point camera at a floor plan</div>
     <div class="ar-controls">
       <button class="ar-btn" onclick="stopAR()">← Back</button>
       <button class="ar-btn" onclick="scaleUp()">Scale +</button>
@@ -245,29 +303,22 @@
   </div>
 </div>
 
-<div id="toast">Kitchen detected</div>
+<div id="toast" id="toast"></div>
 
 <script>
   let arSystem;
   let currentScale = 0.125;
   const step = 0.01;
   let currentRotationY = 180;
+  let activeModel = null;
 
-  // Rotation gesture with one finger swipe
-  let touchStartX = null;
-  document.addEventListener('touchstart', (e) => {
-    if (e.touches.length === 1) touchStartX = e.touches[0].clientX;
-  });
-  document.addEventListener('touchmove', (e) => {
-    if (e.touches.length === 1 && touchStartX !== null) {
-      const dx = e.touches[0].clientX - touchStartX;
-      currentRotationY += dx * 0.5;
-      touchStartX = e.touches[0].clientX;
-      const kitchen = document.getElementById('kitchen');
-      if (kitchen) kitchen.setAttribute('rotation', `0 ${currentRotationY} 0`);
-    }
-  });
-  document.addEventListener('touchend', () => { touchStartX = null; });
+  const kitchenNames = [
+    'Culimaat Patina',
+    'Culimaat Vetrae',
+    'Culimaat Duim',
+    'Culimaat BM',
+    'Culimaat Stricto'
+  ];
 
   // Intro
   window.addEventListener('load', () => {
@@ -281,16 +332,27 @@
     }, 2600);
   });
 
+  // Swipe to rotate
+  let touchStartX = null;
+  document.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) touchStartX = e.touches[0].clientX;
+  });
+  document.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 1 && touchStartX !== null && activeModel) {
+      const dx = e.touches[0].clientX - touchStartX;
+      currentRotationY += dx * 0.5;
+      touchStartX = e.touches[0].clientX;
+      activeModel.setAttribute('rotation', `0 ${currentRotationY} 0`);
+    }
+  });
+  document.addEventListener('touchend', () => { touchStartX = null; });
+
   function startAR() {
-    // Hide everything on top
     document.getElementById('landing').style.display = 'none';
     document.getElementById('grain').classList.add('hidden');
-
-    // Make html+body fully transparent so MindAR camera shows
     document.documentElement.style.background = 'transparent';
     document.body.style.background = 'transparent';
 
-    // Show AR scene
     const scene = document.querySelector('a-scene');
     scene.style.display = 'block';
     document.getElementById('ar-ui').classList.add('active');
@@ -300,22 +362,38 @@
       if (arSystem) arSystem.start();
     };
 
-    if (scene.hasLoaded) {
-      doStart();
-    } else {
-      scene.addEventListener('loaded', doStart, { once: true });
+    if (scene.hasLoaded) { doStart(); }
+    else { scene.addEventListener('loaded', doStart, { once: true }); }
+
+    // Listen for all targets
+    for (let i = 0; i < 5; i++) {
+      const entity = document.querySelectorAll('[mindar-image-target]')[i];
+      const model = entity.querySelector('.kitchen-model');
+
+      entity.addEventListener('targetFound', () => {
+        activeModel = model;
+        currentRotationY = 180;
+        currentScale = 0.125;
+        document.getElementById('ar-kitchen-name').textContent = kitchenNames[i];
+        document.getElementById('ar-hint').textContent = 'Swipe to rotate · Scale + to resize';
+        showToast(kitchenNames[i] + ' detected');
+      });
+
+      entity.addEventListener('targetLost', () => {
+        if (activeModel === model) {
+          activeModel = null;
+          document.getElementById('ar-kitchen-name').textContent = '';
+          document.getElementById('ar-hint').textContent = 'Point camera at a floor plan';
+        }
+      });
     }
+  }
 
-    scene.addEventListener('targetFound', () => {
-      document.getElementById('ar-hint').textContent = 'Swipe to rotate · Scale + to resize';
-      const t = document.getElementById('toast');
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 3000);
-    });
-
-    scene.addEventListener('targetLost', () => {
-      document.getElementById('ar-hint').textContent = 'Point camera at the floor plan';
-    });
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
   }
 
   function stopAR() {
@@ -328,16 +406,19 @@
     const landing = document.getElementById('landing');
     landing.style.display = 'flex';
     landing.classList.add('visible');
+    activeModel = null;
   }
 
   function scaleUp() {
+    if (!activeModel) return;
     currentScale = Math.min(currentScale + step, 0.5);
-    document.getElementById('kitchen').setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+    activeModel.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
   }
 
   function scaleDown() {
-    currentScale = Math.max(currentScale - step, 0.0001);
-    document.getElementById('kitchen').setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+    if (!activeModel) return;
+    currentScale = Math.max(currentScale - step, 0.01);
+    activeModel.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
   }
 </script>
 
